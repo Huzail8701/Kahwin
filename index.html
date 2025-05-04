@@ -1,129 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta http-equiv="refresh" content="0;url=buyer.html">
-  <title>Wedding Invitation</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Editor (Buyer)</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
     }
-    .font-script {
-      font-family: 'Great Vibes', cursive;
+    label {
+      font-weight: 600;
     }
-    .bg-full-image {
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    #themeColorPreview {
-      cursor: pointer;
+    input, textarea {
+      color: black;
     }
   </style>
 </head>
-<body class="text-white relative">
-  <div id="bgImage" class="absolute inset-0 bg-full-image z-0"></div>
-  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen bg-black/60 p-4 text-center">
-    <h1 class="text-5xl md:text-7xl font-script mb-4 animate-fadeIn">You're Invited</h1>
-    <p id="names" class="text-2xl md:text-4xl font-semibold animate-fadeIn delay-200"></p>
-    <p id="dateTime" class="mt-2 text-lg md:text-xl animate-fadeIn delay-300"></p>
-    <p id="venue" class="mt-1 text-base md:text-lg animate-fadeIn delay-400"></p>
-    <p id="city" class="text-sm md:text-base animate-fadeIn delay-450"></p>
-    <p id="state" class="text-sm md:text-base animate-fadeIn delay-500"></p>
+<body class="bg-gray-100 text-black min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Wedding Invitation Editor (Buyer)</h1>
 
-    <div class="flex gap-4 mt-4 animate-fadeIn delay-600">
-      <a id="wazeBtn" href="#" target="_blank" class="bg-white p-2 px-4 rounded flex items-center gap-2 text-black">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Waze_Logo.png" alt="Waze" class="h-6"> Waze
-      </a>
-      <a id="mapsBtn" href="#" target="_blank" class="bg-white p-2 px-4 rounded flex items-center gap-2 text-black">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Google_Maps_icon.svg" alt="Maps" class="h-6"> Google Maps
-      </a>
-    </div>
+    <form id="editorForm" class="space-y-4">
+      <div>
+        <label>Names / Nama Pasangan</label>
+        <input type="text" id="names" class="w-full p-2 rounded border" required>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label>Date / Tarikh</label>
+          <input type="date" id="date" class="w-full p-2 rounded border" required>
+        </div>
+        <div>
+          <label>Time / Masa</label>
+          <input type="time" id="time" class="w-full p-2 rounded border" required>
+        </div>
+      </div>
 
-    <div class="mt-6 animate-fadeIn delay-700">
-      <span class="block text-lg">Wedding Theme Colour:</span>
-      <div id="themeColorPreview" class="w-12 h-12 mt-2 border-2 border-white rounded-full mx-auto"></div>
-      <p id="themeColorCode" class="text-sm mt-1"></p>
-    </div>
+      <div>
+        <label>Venue / Lokasi</label>
+        <input type="text" id="venue" class="w-full p-2 rounded border" required>
+      </div>
+      <div>
+        <label>City / Bandar</label>
+        <input type="text" id="city" class="w-full p-2 rounded border" required>
+      </div>
+      <div>
+        <label>State / Negeri</label>
+        <input type="text" id="state" class="w-full p-2 rounded border" required>
+      </div>
 
-    <div class="mt-6 animate-fadeIn delay-800">
-      <span class="block text-lg">Hashtag:</span>
-      <p id="hashtag" class="mt-1 text-pink-200"></p>
-    </div>
-  </div>
+      <div>
+        <label>Waze Link</label>
+        <input type="url" id="waze" class="w-full p-2 rounded border" required>
+      </div>
+      <div>
+        <label>Google Maps Link</label>
+        <input type="url" id="maps" class="w-full p-2 rounded border" required>
+      </div>
 
-  <!-- RSVP Section -->
-  <div class="relative z-10 mt-10 py-10 px-6 bg-black/60 backdrop-blur-lg" style="background-image: url('https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
-    <h2 class="text-3xl font-bold text-center mb-6">RSVP</h2>
-    <form id="rsvpForm" class="max-w-xl mx-auto space-y-4">
-      <input type="text" id="rsvpName" placeholder="Your Name" class="w-full p-2 rounded text-black" required />
-      <input type="number" id="rsvpGuests" placeholder="Number of Guests" class="w-full p-2 rounded text-black" required />
-      <textarea id="rsvpMessage" placeholder="Message / Wishes" class="w-full p-2 rounded text-black"></textarea>
-      <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded">Send RSVP</button>
+      <div>
+        <label>Wedding Hashtag</label>
+        <input type="text" id="hashtag" class="w-full p-2 rounded border">
+      </div>
+
+      <div>
+        <label>Theme Colour (e.g. #FFDDEE) / Warna Tema</label>
+        <input type="color" id="theme" class="w-16 h-10 p-1 rounded border">
+        <span id="themeCode" class="ml-2 text-gray-700"></span>
+      </div>
+
+      <div>
+        <label>Upload Background Photo (Recommended: 1080x1920)</label>
+        <input type="file" accept="image/*" id="photoUpload" class="w-full p-2 rounded border">
+        <img id="previewImage" class="mt-2 max-h-64 rounded shadow" style="display:none;">
+      </div>
+
+      <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded">Save Data</button>
     </form>
+
+    <hr class="my-8">
+
+    <div>
+      <h2 class="text-xl font-bold mb-2">RSVP Responses (Private)</h2>
+      <ul id="rsvpList" class="space-y-2"></ul>
+    </div>
   </div>
-
-  <!-- Theme Color Fullscreen -->
-  <div id="colorModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-    <div class="w-96 h-96 rounded-full" id="modalColorBox"></div>
-  </div>
-
-  <audio id="bgMusic" loop autoplay>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-
-  <button onclick="toggleMusic()" class="fixed top-4 right-4 z-50 bg-white/70 text-black p-2 rounded-full shadow-md hover:bg-white">
-    🎵
-  </button>
 
   <script>
+    const form = document.getElementById('editorForm');
+    const previewImg = document.getElementById('previewImage');
+    const themeInput = document.getElementById('theme');
+    const themeCode = document.getElementById('themeCode');
+
+    // Preview uploaded photo
+    document.getElementById('photoUpload').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+          localStorage.setItem('weddingPhoto', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Display colour code
+    themeInput.addEventListener('input', () => {
+      themeCode.innerText = themeInput.value;
+    });
+
+    // Load saved data
     const data = JSON.parse(localStorage.getItem("weddingData"));
     if (data) {
-      document.getElementById("names").innerText = data.names;
-      document.getElementById("dateTime").innerText = `${data.date} • ${data.time}`;
-      document.getElementById("venue").innerText = `${data.venue}`;
-      document.getElementById("city").innerText = `${data.city}`;
-      document.getElementById("state").innerText = `${data.state}`;
-      document.getElementById("wazeBtn").href = data.waze;
-      document.getElementById("mapsBtn").href = data.maps;
-      document.getElementById("hashtag").innerText = data.hashtag;
-      document.getElementById("themeColorPreview").style.backgroundColor = data.theme;
-      document.getElementById("modalColorBox").style.backgroundColor = data.theme;
-      document.getElementById("themeColorCode").innerText = data.theme;
-      if (data.photo) {
-        document.getElementById("bgImage").style.backgroundImage = `url('${data.photo}')`;
-      }
+      document.getElementById('names').value = data.names || "";
+      document.getElementById('date').value = data.date || "";
+      document.getElementById('time').value = data.time || "";
+      document.getElementById('venue').value = data.venue || "";
+      document.getElementById('city').value = data.city || "";
+      document.getElementById('state').value = data.state || "";
+      document.getElementById('waze').value = data.waze || "";
+      document.getElementById('maps').value = data.maps || "";
+      document.getElementById('hashtag').value = data.hashtag || "";
+      document.getElementById('theme').value = data.theme || "#ffffff";
+      themeCode.innerText = data.theme || "#ffffff";
+    }
+    const savedPhoto = localStorage.getItem("weddingPhoto");
+    if (savedPhoto) {
+      previewImg.src = savedPhoto;
+      previewImg.style.display = 'block';
     }
 
-    function toggleMusic() {
-      const music = document.getElementById("bgMusic");
-      music.paused ? music.play() : music.pause();
-    }
-
-    const modal = document.getElementById("colorModal");
-    document.getElementById("themeColorPreview").addEventListener("click", () => {
-      modal.style.display = "flex";
-    });
-    modal.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
-
-    document.getElementById("rsvpForm").addEventListener("submit", (e) => {
+    // Save form data
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
-      const entry = {
-        name: document.getElementById("rsvpName").value,
-        guests: document.getElementById("rsvpGuests").value,
-        message: document.getElementById("rsvpMessage").value
+      const newData = {
+        names: document.getElementById('names').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        venue: document.getElementById('venue').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        waze: document.getElementById('waze').value,
+        maps: document.getElementById('maps').value,
+        hashtag: document.getElementById('hashtag').value,
+        theme: document.getElementById('theme').value,
+        photo: localStorage.getItem('weddingPhoto')
       };
-      let rsvps = JSON.parse(localStorage.getItem("rsvpData")) || [];
-      rsvps.push(entry);
-      localStorage.setItem("rsvpData", JSON.stringify(rsvps));
-      localStorage.setItem("latestRSVP", JSON.stringify(entry));
-      document.getElementById("rsvpForm").reset();
-      window.location.href = "thankyou.html";
+      localStorage.setItem('weddingData', JSON.stringify(newData));
+      alert('Saved successfully!');
+    });
+
+    // Load RSVP data
+    const rsvpList = document.getElementById('rsvpList');
+    const rsvps = JSON.parse(localStorage.getItem("rsvpData")) || [];
+    rsvps.forEach(entry => {
+      const li = document.createElement('li');
+      li.textContent = `${entry.name} - ${entry.guests} guests`;
+      rsvpList.appendChild(li);
     });
   </script>
 </body>
