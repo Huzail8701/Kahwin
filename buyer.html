@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Editor (Buyer)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+    }
+    label {
+      font-weight: 600;
+    }
+    input, textarea {
+      color: black;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-black min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Wedding Invitation Editor (Buyer)</h1>
+
+    <form id="editorForm" class="space-y-4">
+      <div>
+        <label>Names / Nama Pasangan</label>
+        <input type="text" id="names" class="w-full p-2 rounded border" required>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label>Date / Tarikh</label>
+          <input type="date" id="date" class="w-full p-2 rounded border" required>
+        </div>
+        <div>
+          <label>Time / Masa</label>
+          <input type="time" id="time" class="w-full p-2 rounded border" required>
+        </div>
+      </div>
+
+      <div>
+        <label>Venue / Lokasi</label>
+        <input type="text" id="venue" class="w-full p-2 rounded border" required>
+      </div>
+      <div>
+        <label>City / Bandar</label>
+        <input type="text" id="city" class="w-full p-2 rounded border" required>
+      </div>
+      <div>
+        <label>State / Negeri</label>
+        <input type="text" id="state" class="w-full p-2 rounded border" required>
+      </div>
+
+      <div>
+        <label>Waze Link</label>
+        <input type="url" id="waze" class="w-full p-2 rounded border" required>
+      </div>
+      <div>
+        <label>Google Maps Link</label>
+        <input type="url" id="maps" class="w-full p-2 rounded border" required>
+      </div>
+
+      <div>
+        <label>Wedding Hashtag</label>
+        <input type="text" id="hashtag" class="w-full p-2 rounded border">
+      </div>
+
+      <div>
+        <label>Theme Colour (e.g. #FFDDEE) / Warna Tema</label>
+        <input type="color" id="theme" class="w-16 h-10 p-1 rounded border">
+        <span id="themeCode" class="ml-2 text-gray-700"></span>
+      </div>
+
+      <div>
+        <label>Upload Background Photo (Recommended: 1080x1920)</label>
+        <input type="file" accept="image/*" id="photoUpload" class="w-full p-2 rounded border">
+        <img id="previewImage" class="mt-2 max-h-64 rounded shadow" style="display:none;">
+      </div>
+
+      <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded">Save Data</button>
+    </form>
+
+    <hr class="my-8">
+
+    <div>
+      <h2 class="text-xl font-bold mb-2">RSVP Responses (Private)</h2>
+      <ul id="rsvpList" class="space-y-2"></ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('editorForm');
+    const previewImg = document.getElementById('previewImage');
+    const themeInput = document.getElementById('theme');
+    const themeCode = document.getElementById('themeCode');
+
+    // Preview uploaded photo
+    document.getElementById('photoUpload').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImg.src = e.target.result;
+          previewImg.style.display = 'block';
+          localStorage.setItem('weddingPhoto', e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Display colour code
+    themeInput.addEventListener('input', () => {
+      themeCode.innerText = themeInput.value;
+    });
+
+    // Load saved data
+    const data = JSON.parse(localStorage.getItem("weddingData"));
+    if (data) {
+      document.getElementById('names').value = data.names || "";
+      document.getElementById('date').value = data.date || "";
+      document.getElementById('time').value = data.time || "";
+      document.getElementById('venue').value = data.venue || "";
+      document.getElementById('city').value = data.city || "";
+      document.getElementById('state').value = data.state || "";
+      document.getElementById('waze').value = data.waze || "";
+      document.getElementById('maps').value = data.maps || "";
+      document.getElementById('hashtag').value = data.hashtag || "";
+      document.getElementById('theme').value = data.theme || "#ffffff";
+      themeCode.innerText = data.theme || "#ffffff";
+    }
+    const savedPhoto = localStorage.getItem("weddingPhoto");
+    if (savedPhoto) {
+      previewImg.src = savedPhoto;
+      previewImg.style.display = 'block';
+    }
+
+    // Save form data
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const newData = {
+        names: document.getElementById('names').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        venue: document.getElementById('venue').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        waze: document.getElementById('waze').value,
+        maps: document.getElementById('maps').value,
+        hashtag: document.getElementById('hashtag').value,
+        theme: document.getElementById('theme').value,
+        photo: localStorage.getItem('weddingPhoto')
+      };
+      localStorage.setItem('weddingData', JSON.stringify(newData));
+      alert('Saved successfully!');
+    });
+
+    // Load RSVP data
+    const rsvpList = document.getElementById('rsvpList');
+    const rsvps = JSON.parse(localStorage.getItem("rsvpData")) || [];
+    rsvps.forEach(entry => {
+      const li = document.createElement('li');
+      li.textContent = `${entry.name} - ${entry.guests} guests`;
+      rsvpList.appendChild(li);
+    });
+  </script>
+</body>
+</html>

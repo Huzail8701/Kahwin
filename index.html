@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wedding Invitation</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -30,10 +30,10 @@
     <p id="names" class="text-2xl md:text-4xl font-semibold animate-fadeIn delay-200"></p>
     <p id="dateTime" class="mt-2 text-lg md:text-xl animate-fadeIn delay-300"></p>
     <p id="venue" class="mt-1 text-base md:text-lg animate-fadeIn delay-400"></p>
-    <p id="city" class="mt-1 text-base md:text-lg animate-fadeIn delay-400"></p>
-    <p id="state" class="mt-1 text-base md:text-lg animate-fadeIn delay-400"></p>
+    <p id="city" class="text-sm md:text-base animate-fadeIn delay-450"></p>
+    <p id="state" class="text-sm md:text-base animate-fadeIn delay-500"></p>
 
-    <div class="flex gap-4 mt-4 animate-fadeIn delay-500">
+    <div class="flex gap-4 mt-4 animate-fadeIn delay-600">
       <a id="wazeBtn" href="#" target="_blank" class="bg-white p-2 px-4 rounded flex items-center gap-2 text-black">
         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Waze_Logo.png" alt="Waze" class="h-6"> Waze
       </a>
@@ -45,7 +45,7 @@
     <div class="mt-6 animate-fadeIn delay-700">
       <span class="block text-lg">Wedding Theme Colour:</span>
       <div id="themeColorPreview" class="w-12 h-12 mt-2 border-2 border-white rounded-full mx-auto"></div>
-      <p id="themeColorCode" class="mt-1 text-sm text-pink-200"></p>
+      <p id="themeColorCode" class="text-sm mt-1"></p>
     </div>
 
     <div class="mt-6 animate-fadeIn delay-800">
@@ -83,9 +83,9 @@
     if (data) {
       document.getElementById("names").innerText = data.names;
       document.getElementById("dateTime").innerText = `${data.date} • ${data.time}`;
-      document.getElementById("venue").innerText = data.venue;
-      document.getElementById("city").innerText = data.city;
-      document.getElementById("state").innerText = data.state;
+      document.getElementById("venue").innerText = `${data.venue}`;
+      document.getElementById("city").innerText = `${data.city}`;
+      document.getElementById("state").innerText = `${data.state}`;
       document.getElementById("wazeBtn").href = data.waze;
       document.getElementById("mapsBtn").href = data.maps;
       document.getElementById("hashtag").innerText = data.hashtag;
@@ -97,17 +97,11 @@
       }
     }
 
-    // Music Toggle
     function toggleMusic() {
       const music = document.getElementById("bgMusic");
-      if (music.paused) {
-        music.play();
-      } else {
-        music.pause();
-      }
+      music.paused ? music.play() : music.pause();
     }
 
-    // Color modal
     const modal = document.getElementById("colorModal");
     document.getElementById("themeColorPreview").addEventListener("click", () => {
       modal.style.display = "flex";
@@ -116,7 +110,6 @@
       modal.style.display = "none";
     });
 
-    // RSVP form
     document.getElementById("rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const entry = {
@@ -127,8 +120,9 @@
       let rsvps = JSON.parse(localStorage.getItem("rsvpData")) || [];
       rsvps.push(entry);
       localStorage.setItem("rsvpData", JSON.stringify(rsvps));
-      alert("Thank you for your RSVP!");
+      localStorage.setItem("latestRSVP", JSON.stringify(entry));
       document.getElementById("rsvpForm").reset();
+      window.location.href = "thankyou.html";
     });
   </script>
 </body>
